@@ -7,13 +7,14 @@ from test import Setting
 
 def train_and_send_model(client_id, local_model, X_train, y_train):
     # Train local model
-    local_model.fit(X_train, y_train, epochs=5, batch_size=32)
+    local_model.fit(X_train, y_train, epochs=100, batch_size=32)
 
     # Get weights
     local_weights = local_model.get_weights()
 
     # Send weights to the server
     weights_hex = [w.tobytes().hex() for w in local_weights]
+    print(weights_hex[1])
     response = requests.post('http://localhost:5000/update_model', json={'client_id': client_id, 'weights': pickle.dumps(local_weights).hex()})
 
     print(response.json())
@@ -22,7 +23,8 @@ def get_global_model():
     response = requests.get('http://localhost:5000/get_model')
     data = response.json()
     global_weights = [np.frombuffer(bytes.fromhex(w), dtype=np.float32) for w in data['weights']]
-
+    #weights_hex = [w.tobytes().hex() for w in global_weights]
+    #print(weights_hex)
     return global_weights
 
 input_shape = (50, 1)  # Assuming time-series data with 50 timesteps and 1 feature

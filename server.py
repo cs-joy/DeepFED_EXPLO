@@ -7,6 +7,9 @@ from test import Setting
 
 app = Flask(__name__)
 
+input_shape = (50, 1)  # Assuming time-series data with 50 timesteps and 1 feature
+num_classes = 10
+
 global_model = Setting.create_cnn_gru_model(input_shape, num_classes)
 global_weights = global_model.get_weights()
 
@@ -31,6 +34,9 @@ def get_model():
     global global_weights
     weights_hex = [w.tobytes().hex() for w in global_weights]
     return jsonify({'weights': weights_hex})
+@app.route('/')
+def hello():
+    return 'from server!'
 
 if __name__ == '__main__':
     app.run(port=5000)

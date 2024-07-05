@@ -18,4 +18,4 @@ print(model.summary())
 X_train = np.random.rand(100, 50, 1)  # Example data: 100 samples, 50 timesteps, 1 feature
 y_train = np.random.randint(0, num_classes, 100)  # Example labels: 100 samples
 
-model.fit(X_train, y_train, epochs=100, batch_size=32)
+model.fit(X_train, y_train, epochs=1000, batch_size=32)
