@@ -3,7 +3,7 @@ import requests
 import numpy as np
 import pickle
 
-from test import Setting
+from Model import Model
 
 def train_and_send_model(client_id, local_model, X_train, y_train):
     # Train local model
@@ -14,7 +14,7 @@ def train_and_send_model(client_id, local_model, X_train, y_train):
 
     # Send weights to the server
     weights_hex = [w.tobytes().hex() for w in local_weights]
-    print(weights_hex[1])
+    print(pickle.dumps(local_weights).hex())
     response = requests.post('http://localhost:5000/update_model', json={'client_id': client_id, 'weights': pickle.dumps(local_weights).hex()})
 
     print(response.json())
@@ -31,7 +31,7 @@ input_shape = (50, 1)  # Assuming time-series data with 50 timesteps and 1 featu
 num_classes = 10
 
 # Example usage for client-side
-local_model = Setting.create_cnn_gru_model(input_shape, num_classes)
+local_model = Model.create_cnn_gru_model(input_shape, num_classes)
 
 # Simulated local training data
 X_train_client = np.random.rand(100, 50, 1)
@@ -41,5 +41,5 @@ y_train_client = np.random.randint(0, num_classes, 100)
 train_and_send_model(client_id=1, local_model=local_model, X_train=X_train_client, y_train=y_train_client)
 
 # Get global model from server
-global_weights = get_global_model()
-local_model.set_weights(global_weights)
+#global_weights = get_global_model()
+#local_model.set_weights(global_weights)

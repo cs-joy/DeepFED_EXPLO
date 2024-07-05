@@ -3,12 +3,12 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv1D, MaxPooling1D, GRU, Dense, Flatten
 import numpy as np
 
-from test import Setting
+from Model import Model
 
 # Example usage
 input_shape = (50, 1)  # Assuming time-series data with 50 timesteps and 1 feature
 num_classes = 10
-model = Setting.create_cnn_gru_model(input_shape, num_classes)
+model = Model.create_cnn_gru_model(input_shape, num_classes)
 
 # Print the model summary
 print(model.summary())

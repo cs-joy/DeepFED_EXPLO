@@ -3,14 +3,14 @@ from flask import Flask, request, jsonify
 import numpy as np
 import pickle
 
-from test import Setting
+from Model import Model
 
 app = Flask(__name__)
 
 input_shape = (50, 1)  # Assuming time-series data with 50 timesteps and 1 feature
 num_classes = 10
 
-global_model = Setting.create_cnn_gru_model(input_shape, num_classes)
+global_model = Model.create_cnn_gru_model(input_shape, num_classes)
 global_weights = global_model.get_weights()
 
 @app.route('/update_model', methods=['POST'])
