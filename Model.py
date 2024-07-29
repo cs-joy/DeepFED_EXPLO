@@ -2,6 +2,7 @@ import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv1D, MaxPooling1D, GRU, Dense, Flatten
 
+
 class Model:
     def create_cnn_gru_model(input_shape, num_classes):
         model = Sequential()
